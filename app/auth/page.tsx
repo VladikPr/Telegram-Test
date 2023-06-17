@@ -3,7 +3,7 @@ import TelegramLoginButton from "@/components/TelegramLoginButton";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useCallback, useState } from "react";
-import { TLoginButton, TLoginButtonSize } from "react-telegram-auth";
+
 
 const Auth = () => {
   const [number, setNumber] = useState("");
@@ -67,9 +67,7 @@ const Auth = () => {
               />
             </div>
             {variant === "login" ? (
-              <TelegramLoginButton botName="TrafficLabLoginBot" dataAuthUrl="/api/auth/telegram/callback" requestAccess="write" widgetVersion="22" className="text-white cursor-pointer">
-                Login
-              </TelegramLoginButton>
+              <TelegramLoginButton botName="TrafficLabLoginBot" dataAuthUrl="https://telegram-test-ten.vercel.app/api/login" requestAccess="write" widgetVersion="22" className="text-white cursor-pointer" />
             ) : (
               <button
                 onClick={variant === "login" ? login : register}
