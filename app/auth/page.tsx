@@ -67,7 +67,7 @@ const Auth = () => {
               />
             </div>
             {variant === "login" ? (
-              <TelegramLoginButton botName="TrafficLabLoginBot" dataAuthUrl="https://telegram-test-ten.vercel.app/api/login" requestAccess="write" widgetVersion="22" className="text-white cursor-pointer" />
+              <TelegramLoginButton botName="TrafficLabLoginBot" dataAuthUrl="https://telegram-test-ten.vercel.app/api/auth/signin" requestAccess="write" widgetVersion="22" className="text-white cursor-pointer" />
             ) : (
               <button
                 onClick={variant === "login" ? login : register}

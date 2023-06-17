@@ -13,8 +13,8 @@ export const authOptions: AuthOptions  = {
             credentials: {},
             async authorize(credentials, req): Promise<any>  {
 
-              //const { hash, ...userDetails } = req.query;
-              //console.log()
+              const data = req.query;
+              console.log(data)
 
 
               /* if (!credentials?.number) {
