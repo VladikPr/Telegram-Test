@@ -2,40 +2,37 @@ import NextAuth, { AuthOptions } from "next-auth";
 import prismadb from '@/libs/prismadb';
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import { objectToAuthDataMap, AuthDataValidator } from '@telegram-auth/server';
 
 export const authOptions: AuthOptions  = {
     adapter: PrismaAdapter(prismadb),
     providers: [
-        CredentialsProvider({
-            id: 'telegram',
-            name: "Telegram",
-            credentials: {},
-            async authorize(credentials, req): Promise<any>  {
-
-              const data = req.query;
-              console.log(data)
-
-
-              /* if (!credentials?.number) {
-                throw new Error('Number required');
-              }
-
-              const user = await prismadb.user.findUnique({ where: {
-                number: credentials.number
-              }})
-
-              if (!user) {
-                throw new Error('User does not exist');
-              } */
-
-              // Telegram Bot sends back: user's Telegram ID, first and last name, username, avatar URL, date of the authentication
-              
-              // console.log(user)
-              return null
-            }
-          })
+      CredentialsProvider({
+        id: 'telegram-login',
+        name: 'Telegram Login',
+        credentials: {},
+        async authorize(credentials, req): Promise<any> {
+          const validator = new AuthDataValidator({ botToken: `${process.env.BOT_TOKEN}` });
+  
+          const data = objectToAuthDataMap(req.query || {});
+  
+          const user = await validator.validate(data);
+  
+          if (user.id && user.first_name) {
+            return {
+              id: user.id.toString(),
+              name: [user.first_name, user.last_name || ''].join(' '),
+              image: user.photo_url,
+            };
+          }
+  
+          return null;
+        },
+      }),
     ],
+    pages: {
+      signIn: '/auth',
+    },
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt"
