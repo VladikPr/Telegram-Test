@@ -70,7 +70,8 @@ const Auth = () => {
                 <LoginButton
                 botUsername="TrafficLabLoginBot"
                 onAuthCallback={(data) => {
-                    signIn("telegram-login", { callbackUrl: '/' }, data as any);
+                    console.log(data)
+                    //signIn("telegram-login", { callbackUrl: '/' }, data as any);
                 }}
             />
             ) : (
