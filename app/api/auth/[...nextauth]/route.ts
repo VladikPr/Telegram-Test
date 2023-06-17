@@ -4,7 +4,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { objectToAuthDataMap, AuthDataValidator } from '@telegram-auth/server';
 
-export const authOptions: AuthOptions  = {
+const authOptions: AuthOptions  = {
     adapter: PrismaAdapter(prismadb),
     providers: [
       CredentialsProvider({
@@ -12,7 +12,7 @@ export const authOptions: AuthOptions  = {
         name: 'Telegram Login',
         credentials: {},
         async authorize(credentials, req): Promise<any> {
-  
+          console.log('working')
           const data = req.query || {};
           const user = data?.first_name;
   
