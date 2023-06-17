@@ -12,13 +12,17 @@ const authOptions: AuthOptions  = {
         name: 'Telegram Login',
         credentials: {},
         async authorize(credentials, req): Promise<any> {
-          console.log('working')
-          const data = req.query || {};
-          const user = data?.first_name;
+          const validator = new AuthDataValidator({ botToken: `${process.env.BOT_TOKEN}` });
   
-          if (user) {
+          const data = objectToAuthDataMap(req.query || {});
+  
+          const user = await validator.validate(data);
+  
+          if (user.id && user.first_name) {
             return {
-              name: user
+              id: user.id.toString(),
+              name: [user.first_name, user.last_name || ''].join(' '),
+              image: user.photo_url,
             };
           }
   
