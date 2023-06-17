@@ -67,7 +67,7 @@ const Auth = () => {
               />
             </div>
             {variant === "login" ? (
-              <TelegramLoginButton botName="TrafficLabBot" dataAuthUrl="/api/auth/telegram/callback" requestAccess="write" widgetVersion="22" className="text-white cursor-pointer">
+              <TelegramLoginButton botName="TrafficLabLoginBot" dataAuthUrl="/api/auth/telegram/callback" requestAccess="write" widgetVersion="22" className="text-white cursor-pointer">
                 Login
               </TelegramLoginButton>
             ) : (
