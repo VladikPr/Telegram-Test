@@ -15,7 +15,6 @@ export const authOptions: AuthOptions  = {
   
           const data = req.query || {};
           const user = data?.first_name;
-          console.log(user)
   
           if (user) {
             return {
